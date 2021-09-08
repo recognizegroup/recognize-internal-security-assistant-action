@@ -251,7 +251,7 @@ exports.ReportMarkdownConverter = void 0;
 const violation_type_1 = __nccwpck_require__(4471);
 class ReportMarkdownConverter {
     convert(result) {
-        const base = ['| Status  | Description |', '| --- | ------------- |'];
+        const base = ['| Status  | Description |', '| :---: | ------------- |'];
         return [
             ...base,
             ...result.map(it => {
@@ -735,7 +735,7 @@ const ssl = (url, client, excluded = []) => __awaiter(void 0, void 0, void 0, fu
             return {
                 id,
                 violation: violation_type_1.ViolationType.WARNING,
-                description: `The following cipher suites should be avoided and only used for backward compatibility reasons: ${disallowedCipherSuites.join(', ')}.`
+                description: `The following cipher suites should be avoided and only used for backward compatibility reasons: ${warningCipherSuites.join(', ')}.`
             };
         }
         return {

@@ -3,7 +3,7 @@ import {ViolationType} from '../models/violation-type'
 
 export class ReportMarkdownConverter {
   convert(result: RuleResult[]): string {
-    const base = ['| Status  | Description |', '| --- | ------------- |']
+    const base = ['| Status  | Description |', '| :---: | ------------- |']
 
     return [
       ...base,

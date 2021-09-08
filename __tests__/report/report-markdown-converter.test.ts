@@ -19,7 +19,7 @@ describe('report-markdown-converter', () => {
     expect(md).toBe(
       `
 | Status  | Description |
-| --- | ------------- |
+| :---: | ------------- |
 | ✅ | Test 1 |
 | ❌ | Test 2 |
 | ⚠️ | Test 3 |

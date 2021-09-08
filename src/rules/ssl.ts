@@ -73,7 +73,7 @@ export const ssl: Rule = async (
       return {
         id,
         violation: ViolationType.WARNING,
-        description: `The following cipher suites should be avoided and only used for backward compatibility reasons: ${disallowedCipherSuites.join(
+        description: `The following cipher suites should be avoided and only used for backward compatibility reasons: ${warningCipherSuites.join(
           ', '
         )}.`
       }
