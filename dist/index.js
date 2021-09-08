@@ -250,25 +250,27 @@ exports.ReportMarkdownConverter = void 0;
 const violation_type_1 = __nccwpck_require__(4471);
 class ReportMarkdownConverter {
     convert(result) {
-        return result
-            .map(it => {
-            let icon;
-            switch (it.violation) {
-                case violation_type_1.ViolationType.NONE:
-                    icon = '✅';
-                    break;
-                case violation_type_1.ViolationType.WARNING:
-                    icon = '⚠️';
-                    break;
-                case violation_type_1.ViolationType.ERROR:
-                    icon = '❌';
-                    break;
-                default:
-                    icon = '⏩';
-            }
-            return `* ${icon} ${it.description}`;
-        })
-            .join('\n');
+        const base = ['| Status  | Description |', '| --- | ------------- |'];
+        return [
+            ...base,
+            ...result.map(it => {
+                let icon;
+                switch (it.violation) {
+                    case violation_type_1.ViolationType.NONE:
+                        icon = '✅';
+                        break;
+                    case violation_type_1.ViolationType.WARNING:
+                        icon = '⚠️';
+                        break;
+                    case violation_type_1.ViolationType.ERROR:
+                        icon = '❌';
+                        break;
+                    default:
+                        icon = '⏩';
+                }
+                return `| ${icon} | ${it.description} |`;
+            })
+        ].join('\n');
     }
 }
 exports.ReportMarkdownConverter = ReportMarkdownConverter;

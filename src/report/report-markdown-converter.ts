@@ -3,8 +3,11 @@ import {ViolationType} from '../models/violation-type'
 
 export class ReportMarkdownConverter {
   convert(result: RuleResult[]): string {
-    return result
-      .map(it => {
+    const base = ['| Status  | Description |', '| --- | ------------- |']
+
+    return [
+      ...base,
+      ...result.map(it => {
         let icon
 
         switch (it.violation) {
@@ -21,8 +24,8 @@ export class ReportMarkdownConverter {
             icon = '⏩'
         }
 
-        return `* ${icon} ${it.description}`
+        return `| ${icon} | ${it.description} |`
       })
-      .join('\n')
+    ].join('\n')
   }
 }
