@@ -1,0 +1,16 @@
+name: 'Recognize Internal Security Assistant'
+description: 'Given an URL, this action creates a security report with some basic server settings.'
+inputs:
+  urls:
+    description: 'List of URLs'
+    required: true
+  excluded:
+    description: 'Comma separated list of excluded rules'
+    required: false
+    default: ''
+  token:
+    description: 'GitHub API token'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
