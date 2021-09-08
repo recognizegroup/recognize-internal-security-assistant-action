@@ -7,9 +7,6 @@ import {HttpClient} from './http/http-client'
 
 async function run(): Promise<void> {
   try {
-    const event = github.context.payload
-    const sha = event.workflow_run.head_commit.id
-
     const token = core.getInput('token', {required: true})
     const octokit = github.getOctokit(token)
 
@@ -26,7 +23,7 @@ async function run(): Promise<void> {
       core.info(`Creating check run ${name}`)
 
       const createdCheck = await octokit.rest.checks.create({
-        head_sha: sha,
+        head_sha: github.context.sha,
         name,
         status: 'in_progress',
         output: {
