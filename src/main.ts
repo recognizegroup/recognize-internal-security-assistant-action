@@ -15,7 +15,9 @@ async function run(): Promise<void> {
 
     const urls: string = core.getInput('urls')
     const excluded: string[] = core
-        .getInput('excluded').split(',').map(it => it.trim());
+      .getInput('excluded')
+      .split(',')
+      .map(it => it.trim())
 
     for (const url of urls.split(',')) {
       const processed = url.trim()
@@ -65,7 +67,7 @@ async function run(): Promise<void> {
         ...github.context.repo
       })
     }
-  } catch (error) {
+  } catch (error: any) {
     core.setFailed(error.message)
   }
 }

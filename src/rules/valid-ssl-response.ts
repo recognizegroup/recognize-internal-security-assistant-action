@@ -1,6 +1,6 @@
-import {ViolationType} from '../models/violation-type'
-import {Rule} from '../models/rule'
 import {HttpClient} from '../http/http-client'
+import {Rule} from '../models/rule'
+import {ViolationType} from '../models/violation-type'
 import {checkExcluded} from './check-excluded'
 
 export const validSslResponse: Rule = async (

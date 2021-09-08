@@ -1,5 +1,5 @@
-import {RuleResult} from './rule-result'
 import {HttpClient} from '../http/http-client'
+import {RuleResult} from './rule-result'
 
 export type Rule = (
   url: string,

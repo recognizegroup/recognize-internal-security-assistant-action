@@ -1,8 +1,8 @@
 import {HttpClient} from '../http/http-client'
 import {Rule} from '../models/rule'
 import {ViolationType} from '../models/violation-type'
-import parse from 'content-security-policy-parser'
 import {checkExcluded} from './check-excluded'
+import parse from 'content-security-policy-parser'
 
 export const contentSecurityPolicy: Rule = async (
   url: string,

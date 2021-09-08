@@ -1,5 +1,5 @@
-import {createGenericHeaderCheck} from './header-check'
 import {ViolationType} from '../models/violation-type'
+import {createGenericHeaderCheck} from './header-check'
 
 export const xXssProtection = createGenericHeaderCheck(
   'x-xss-protection',

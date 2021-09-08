@@ -1,9 +1,9 @@
-import {Rule} from '../models/rule'
 import {HttpClient} from '../http/http-client'
+import {Rule} from '../models/rule'
 import {ViolationType} from '../models/violation-type'
-import ssllabs from 'node-ssllabs'
-import config from '../config'
 import {checkExcluded} from './check-excluded'
+import config from '../config'
+import ssllabs from 'node-ssllabs'
 
 export const ssl: Rule = async (
   url: string,
