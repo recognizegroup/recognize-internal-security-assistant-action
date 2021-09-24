@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@types/node": "^16.9.4",
-    "@typescript-eslint/parser": "^4.31.0",
+    "@typescript-eslint/parser": "^4.31.2",
     "@octokit/types": "^6.30.0",
     "@octokit/webhooks": "^9.14.1",
     "@vercel/ncc": "^0.31.1",
