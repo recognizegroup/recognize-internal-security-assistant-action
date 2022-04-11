@@ -1,14 +1,33 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {check} from './check'
-import {ViolationType} from './models/violation-type'
-import {ReportMarkdownConverter} from './report/report-markdown-converter'
 import {HttpClient} from './http/http-client'
+import {Octokit} from '@octokit/rest'
+import {ReportMarkdownConverter} from './report/report-markdown-converter'
+import {ViolationType} from './models/violation-type'
+import {check} from './check'
+import {createAppAuth} from '@octokit/auth-app'
 
 async function run(): Promise<void> {
   try {
-    const token = core.getInput('token', {required: true})
-    const octokit = github.getOctokit(token)
+    const githubAppId = core.getInput('github-app-id', {required: true})
+    const githubAppInstallationId = core.getInput(
+      'github-app-installation-id',
+      {required: true}
+    )
+    const githubAppPrivateKey = core.getInput('github-app-private-key', {
+      required: true
+    })
+
+    const authData = {
+      appId: githubAppId,
+      privateKey: githubAppPrivateKey,
+      installationId: githubAppInstallationId
+    }
+
+    const octokit = new Octokit({
+      authStrategy: createAppAuth,
+      auth: authData
+    })
 
     const urls: string = core.getInput('urls')
     const excluded: string[] = core
