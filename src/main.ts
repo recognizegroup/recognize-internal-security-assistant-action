@@ -41,16 +41,16 @@ async function run(): Promise<void> {
 
       core.info(`Creating check run ${name}`)
 
-      const createdCheck = await octokit.rest.checks.create({
-        head_sha: github.context.sha,
-        name,
-        status: 'in_progress',
-        output: {
-          title: name,
-          summary: ''
-        },
-        ...github.context.repo
-      })
+      // const createdCheck = await octokit.rest.checks.create({
+      //   head_sha: github.context.sha,
+      //   name,
+      //   status: 'in_progress',
+      //   output: {
+      //     title: name,
+      //     summary: ''
+      //   },
+      //   ...github.context.repo
+      // })
 
       core.info(`Debug 1: ${name}`)
 
@@ -76,17 +76,17 @@ async function run(): Promise<void> {
       const reporter = new ReportMarkdownConverter()
       const summary = `The scan resulted in ${failures.length} failures, ${warnings.length} warnings. A total of ${executed.length} checks were executed.`
 
-      await octokit.rest.checks.update({
-        check_run_id: createdCheck.data.id,
-        conclusion,
-        status: 'completed',
-        output: {
-          title: `${name}`,
-          summary,
-          text: reporter.convert(result)
-        },
-        ...github.context.repo
-      })
+      // await octokit.rest.checks.update({
+      //   check_run_id: createdCheck.data.id,
+      //   conclusion,
+      //   status: 'completed',
+      //   output: {
+      //     title: `${name}`,
+      //     summary,
+      //     text: reporter.convert(result)
+      //   },
+      //   ...github.context.repo
+      // })
     }
   } catch (error: any) {
     core.setFailed(error.message)

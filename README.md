@@ -13,7 +13,7 @@ Currently, the tool checks for:
 * SSL settings (protocol versions, ciphers)
 * `Strict-Transport-Security` header
 * Version Information in headers
-* `X-Content-Type-Options` heaader
+* `X-Content-Type-Options` header
 * `X-XSS-Protection` header
 
 ## Example
