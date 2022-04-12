@@ -76,6 +76,10 @@ async function run(): Promise<void> {
       const reporter = new ReportMarkdownConverter()
       const summary = `The scan resulted in ${failures.length} failures, ${warnings.length} warnings. A total of ${executed.length} checks were executed.`
 
+      core.info(summary)
+      // eslint-disable-next-line no-console
+      console.log(result)
+
       // await octokit.rest.checks.update({
       //   check_run_id: createdCheck.data.id,
       //   conclusion,
