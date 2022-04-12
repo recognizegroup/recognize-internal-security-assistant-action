@@ -216,7 +216,9 @@ function run() {
                         title: name,
                         summary: ''
                     } }, github.context.repo));
+                core.info(`Debug 1: ${name}`);
                 const client = new http_client_1.HttpClient();
+                core.info(`Debug 2: ${name}`);
                 const result = yield (0, check_1.check)(processed, client, excluded);
                 core.info(`Finished check ${name}`);
                 const failures = result.filter(it => it.violation === violation_type_1.ViolationType.ERROR);

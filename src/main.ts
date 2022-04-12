@@ -52,7 +52,12 @@ async function run(): Promise<void> {
         ...github.context.repo
       })
 
+      core.info(`Debug 1: ${name}`)
+
       const client = new HttpClient()
+
+      core.info(`Debug 2: ${name}`)
+
       const result = await check(processed, client, excluded)
 
       core.info(`Finished check ${name}`)
