@@ -1,9 +1,9 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {check} from './check'
-import {ViolationType} from './models/violation-type'
-import {ReportMarkdownConverter} from './report/report-markdown-converter'
 import {HttpClient} from './http/http-client'
+import {ReportMarkdownConverter} from './report/report-markdown-converter'
+import {ViolationType} from './models/violation-type'
+import {check} from './check'
 
 async function run(): Promise<void> {
   try {
