@@ -22,6 +22,8 @@ async function run(): Promise<void> {
 
       core.info(`Creating check run ${name}`)
 
+      core.info(`github sha: ${github.context.sha}`)
+
       const createdCheck = await octokit.rest.checks.create({
         head_sha: github.context.sha,
         name,
