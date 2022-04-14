@@ -198,6 +198,7 @@ function run() {
                 const processed = url.trim();
                 const name = `Recognize Internal Security Assistant (${processed})`;
                 core.info(`Creating check run ${name}`);
+                core.info(`github sha: ${github.context.sha}`);
                 const createdCheck = yield octokit.rest.checks.create(Object.assign({ head_sha: github.context.sha, name, status: 'in_progress', output: {
                         title: name,
                         summary: ''
