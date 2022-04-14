@@ -34,7 +34,6 @@ async function run(): Promise<void> {
       })
 
       const client = new HttpClient()
-
       const result = await check(processed, client, excluded)
 
       core.info(`Finished check ${name}`)
