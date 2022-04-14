@@ -198,14 +198,11 @@ function run() {
                 const processed = url.trim();
                 const name = `Recognize Internal Security Assistant (${processed})`;
                 core.info(`Creating check run ${name}`);
-                core.info(`github sha: ${github.context.sha}`);
                 const createdCheck = yield octokit.rest.checks.create(Object.assign({ head_sha: github.context.sha, name, status: 'in_progress', output: {
                         title: name,
                         summary: ''
                     } }, github.context.repo));
-                core.info(`Debug 1: ${name}`);
                 const client = new http_client_1.HttpClient();
-                core.info(`Debug 2: ${name}`);
                 const result = yield (0, check_1.check)(processed, client, excluded);
                 core.info(`Finished check ${name}`);
                 const failures = result.filter(it => it.violation === violation_type_1.ViolationType.ERROR);
