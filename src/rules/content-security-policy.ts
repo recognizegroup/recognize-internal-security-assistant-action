@@ -53,6 +53,6 @@ export const contentSecurityPolicy: Rule = async (
   return {
     id,
     violation: ViolationType.NONE,
-    description: `Valid Content-Security-Policy found.`
+    description: `Valid ${headerName} found.`
   }
 }

@@ -36,7 +36,7 @@ export const createGenericHeaderCheck = (
         return {
           id,
           violation,
-          description: `Header ${headerName} has an invalid value ${value}. Allow values are: ${allowedValues.join(
+          description: `Header ${headerName} has an invalid value ${value}. Allowed values are: ${allowedValues.join(
             ', '
           )}.`
         }
