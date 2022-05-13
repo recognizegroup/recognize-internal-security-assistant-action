@@ -9,22 +9,27 @@ export class ReportMarkdownConverter {
       ...base,
       ...result.map(it => {
         let icon
+        let iconTitle
 
         switch (it.violation) {
           case ViolationType.NONE:
             icon = '✅'
+            iconTitle = 'Success'
             break
           case ViolationType.WARNING:
             icon = '⚠️'
+            iconTitle = 'Warning'
             break
           case ViolationType.ERROR:
             icon = '❌'
+            iconTitle = 'Failure'
             break
           default:
             icon = '⏩'
+            iconTitle = 'Skipped'
         }
 
-        return `| ${icon} | ${it.description} |`
+        return `| <div title="${iconTitle}">${icon}</div> | <div title="ID: ${it.id}">${it.description}</div> |`
       })
     ].join('\n')
   }
