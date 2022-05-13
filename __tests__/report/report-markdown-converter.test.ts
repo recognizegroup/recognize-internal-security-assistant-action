@@ -23,7 +23,7 @@ describe('report-markdown-converter', () => {
 | <div title="Success">✅</div> | <div title="ID: one">Test 1</div> |
 | <div title="Failure">❌</div> | <div title="ID: two">Test 2</div> |
 | <div title="Warning">⚠️</div> | <div title="ID: three">Test 3</div> |
-| <div title="Skipped">⏩</div> | <div title="ID: four">Test 4</div> |
+| <div title="Excluded">⏩</div> | <div title="ID: four">Test 4</div> |
 `.trim()
     )
   })

@@ -26,7 +26,7 @@ export class ReportMarkdownConverter {
             break
           default:
             icon = '⏩'
-            iconTitle = 'Skipped'
+            iconTitle = 'Excluded'
         }
 
         return `| <div title="${iconTitle}">${icon}</div> | <div title="ID: ${it.id}">${it.description}</div> |`
