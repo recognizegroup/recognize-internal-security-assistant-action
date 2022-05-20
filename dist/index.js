@@ -204,6 +204,24 @@ function run() {
                     } }, github.context.repo));
                 const client = new http_client_1.HttpClient();
                 const result = yield (0, check_1.check)(processed, client, excluded);
+                // let result
+                //
+                // try {
+                //   result = await check(processed, client, excluded)
+                // } catch (error: any) {
+                //   await octokit.rest.checks.update({
+                //     check_run_id: createdCheck.data.id,
+                //     conclusion: 'failure',
+                //     status: 'completed',
+                //     output: {
+                //       title: `${name}`,
+                //       summary: 'The scan resulted in a error',
+                //       text: error.message
+                //     },
+                //     ...github.context.repo
+                //   })
+                //   continue
+                // }
                 core.info(`Finished check ${name}`);
                 const failures = result.filter(it => it.violation === violation_type_1.ViolationType.ERROR);
                 const warnings = result.filter(it => it.violation === violation_type_1.ViolationType.WARNING);
@@ -220,7 +238,7 @@ function run() {
             }
         }
         catch (error) {
-            core.setFailed(error.message);
+            core.setFailed(error);
         }
     });
 }
@@ -262,20 +280,25 @@ class ReportMarkdownConverter {
             ...base,
             ...result.map(it => {
                 let icon;
+                let iconTitle;
                 switch (it.violation) {
                     case violation_type_1.ViolationType.NONE:
                         icon = '✅';
+                        iconTitle = 'Success';
                         break;
                     case violation_type_1.ViolationType.WARNING:
                         icon = '⚠️';
+                        iconTitle = 'Warning';
                         break;
                     case violation_type_1.ViolationType.ERROR:
                         icon = '❌';
+                        iconTitle = 'Failure';
                         break;
                     default:
                         icon = '⏩';
+                        iconTitle = 'Excluded';
                 }
-                return `| ${icon} | ${it.description} |`;
+                return `| <div title="${iconTitle}">${icon}</div> | <div title="ID: ${it.id}">${it.description}</div> |`;
             })
         ].join('\n');
     }
@@ -382,7 +405,7 @@ const contentSecurityPolicy = (url, client, excluded = []) => __awaiter(void 0, 
     return {
         id,
         violation: violation_type_1.ViolationType.NONE,
-        description: `Valid Content-Security-Policy found.`
+        description: `Valid ${headerName} found.`
     };
 });
 exports.contentSecurityPolicy = contentSecurityPolicy;
@@ -446,7 +469,7 @@ const createGenericHeaderCheck = (id, headerName, violation, { allowedValues, pr
                 return {
                     id,
                     violation,
-                    description: `Header ${headerName} has an invalid value ${value}. Allow values are: ${allowedValues.join(', ')}.`
+                    description: `Header ${headerName} has an invalid value ${value}. Allowed values are: ${allowedValues.join(', ')}.`
                 };
             }
             else {
