@@ -34,7 +34,27 @@ async function run(): Promise<void> {
       })
 
       const client = new HttpClient()
+
       const result = await check(processed, client, excluded)
+
+      // let result
+      //
+      // try {
+      //   result = await check(processed, client, excluded)
+      // } catch (error: any) {
+      //   await octokit.rest.checks.update({
+      //     check_run_id: createdCheck.data.id,
+      //     conclusion: 'failure',
+      //     status: 'completed',
+      //     output: {
+      //       title: `${name}`,
+      //       summary: 'The scan resulted in a error',
+      //       text: error.message
+      //     },
+      //     ...github.context.repo
+      //   })
+      //   continue
+      // }
 
       core.info(`Finished check ${name}`)
 
@@ -65,7 +85,7 @@ async function run(): Promise<void> {
       })
     }
   } catch (error: any) {
-    core.setFailed(error.message)
+    core.setFailed(error)
   }
 }
 
