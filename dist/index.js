@@ -187,7 +187,7 @@ const check_1 = __nccwpck_require__(7657);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const globalErrors = [];
+            const checkErrors = [];
             const token = core.getInput('token', { required: true });
             const octokit = github.getOctokit(token);
             const urls = core.getInput('urls');
@@ -209,7 +209,7 @@ function run() {
                     result = yield (0, check_1.check)(processed, client, excluded);
                 }
                 catch (error) {
-                    globalErrors.push(error.message);
+                    checkErrors.push(error.message);
                     yield octokit.rest.checks.update(Object.assign({ check_run_id: createdCheck.data.id, conclusion: 'failure', status: 'completed', output: {
                             title: `${name}`,
                             summary: 'The scan resulted in a error',
@@ -231,8 +231,8 @@ function run() {
                         text: reporter.convert(result)
                     } }, github.context.repo));
             }
-            if (globalErrors) {
-                core.setFailed(globalErrors.join('\n'));
+            if (checkErrors) {
+                core.setFailed(checkErrors.join('\n'));
             }
         }
         catch (error) {

@@ -7,7 +7,7 @@ import {check} from './check'
 
 async function run(): Promise<void> {
   try {
-    const globalErrors: string[] = []
+    const checkErrors: string[] = []
 
     const token = core.getInput('token', {required: true})
     const octokit = github.getOctokit(token)
@@ -41,7 +41,7 @@ async function run(): Promise<void> {
       try {
         result = await check(processed, client, excluded)
       } catch (error: any) {
-        globalErrors.push(error.message)
+        checkErrors.push(error.message)
 
         await octokit.rest.checks.update({
           check_run_id: createdCheck.data.id,
@@ -86,8 +86,8 @@ async function run(): Promise<void> {
       })
     }
 
-    if (globalErrors) {
-      core.setFailed(globalErrors.join('\n'))
+    if (checkErrors) {
+      core.setFailed(checkErrors.join('\n'))
     }
   } catch (error: any) {
     core.setFailed(error.message)
