@@ -187,6 +187,7 @@ const check_1 = __nccwpck_require__(7657);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const globalErrors = [];
             const token = core.getInput('token', { required: true });
             const octokit = github.getOctokit(token);
             const urls = core.getInput('urls');
@@ -203,25 +204,19 @@ function run() {
                         summary: ''
                     } }, github.context.repo));
                 const client = new http_client_1.HttpClient();
-                const result = yield (0, check_1.check)(processed, client, excluded);
-                // let result
-                //
-                // try {
-                //   result = await check(processed, client, excluded)
-                // } catch (error: any) {
-                //   await octokit.rest.checks.update({
-                //     check_run_id: createdCheck.data.id,
-                //     conclusion: 'failure',
-                //     status: 'completed',
-                //     output: {
-                //       title: `${name}`,
-                //       summary: 'The scan resulted in a error',
-                //       text: error.message
-                //     },
-                //     ...github.context.repo
-                //   })
-                //   continue
-                // }
+                let result;
+                try {
+                    result = yield (0, check_1.check)(processed, client, excluded);
+                }
+                catch (error) {
+                    globalErrors.push(error.message);
+                    yield octokit.rest.checks.update(Object.assign({ check_run_id: createdCheck.data.id, conclusion: 'failure', status: 'completed', output: {
+                            title: `${name}`,
+                            summary: 'The scan resulted in a error',
+                            text: error.message
+                        } }, github.context.repo));
+                    continue;
+                }
                 core.info(`Finished check ${name}`);
                 const failures = result.filter(it => it.violation === violation_type_1.ViolationType.ERROR);
                 const warnings = result.filter(it => it.violation === violation_type_1.ViolationType.WARNING);
@@ -236,9 +231,12 @@ function run() {
                         text: reporter.convert(result)
                     } }, github.context.repo));
             }
+            if (globalErrors) {
+                core.setFailed(globalErrors.join('\n'));
+            }
         }
         catch (error) {
-            core.setFailed(error);
+            core.setFailed(error.message);
         }
     });
 }

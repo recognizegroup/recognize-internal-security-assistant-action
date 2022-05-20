@@ -7,6 +7,8 @@ import {check} from './check'
 
 async function run(): Promise<void> {
   try {
+    const globalErrors: string[] = []
+
     const token = core.getInput('token', {required: true})
     const octokit = github.getOctokit(token)
 
@@ -34,27 +36,26 @@ async function run(): Promise<void> {
       })
 
       const client = new HttpClient()
+      let result
 
-      const result = await check(processed, client, excluded)
+      try {
+        result = await check(processed, client, excluded)
+      } catch (error: any) {
+        globalErrors.push(error.message)
 
-      // let result
-      //
-      // try {
-      //   result = await check(processed, client, excluded)
-      // } catch (error: any) {
-      //   await octokit.rest.checks.update({
-      //     check_run_id: createdCheck.data.id,
-      //     conclusion: 'failure',
-      //     status: 'completed',
-      //     output: {
-      //       title: `${name}`,
-      //       summary: 'The scan resulted in a error',
-      //       text: error.message
-      //     },
-      //     ...github.context.repo
-      //   })
-      //   continue
-      // }
+        await octokit.rest.checks.update({
+          check_run_id: createdCheck.data.id,
+          conclusion: 'failure',
+          status: 'completed',
+          output: {
+            title: `${name}`,
+            summary: 'The scan resulted in a error',
+            text: error.message
+          },
+          ...github.context.repo
+        })
+        continue
+      }
 
       core.info(`Finished check ${name}`)
 
@@ -84,8 +85,12 @@ async function run(): Promise<void> {
         ...github.context.repo
       })
     }
+
+    if (globalErrors) {
+      core.setFailed(globalErrors.join('\n'))
+    }
   } catch (error: any) {
-    core.setFailed(error)
+    core.setFailed(error.message)
   }
 }
 
