@@ -231,7 +231,7 @@ function run() {
                         text: reporter.convert(result)
                     } }, github.context.repo));
             }
-            if (checkErrors) {
+            if (checkErrors.length > 0) {
                 core.setFailed(checkErrors.join('\n'));
             }
         }

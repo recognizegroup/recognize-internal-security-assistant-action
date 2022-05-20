@@ -86,7 +86,7 @@ async function run(): Promise<void> {
       })
     }
 
-    if (checkErrors) {
+    if (checkErrors.length > 0) {
       core.setFailed(checkErrors.join('\n'))
     }
   } catch (error: any) {
