@@ -41,6 +41,8 @@ async function run(): Promise<void> {
       try {
         result = await check(processed, client, excluded)
       } catch (error: any) {
+        core.error(error)
+
         checkErrors.push(error.message)
 
         await octokit.rest.checks.update({
