@@ -88,6 +88,9 @@ async function run(): Promise<void> {
 
     if (checkErrors.length > 0) {
       for (const checkError of checkErrors) {
+        core.error(checkError)
+      }
+      for (const checkError of checkErrors) {
         core.setFailed(checkError)
       }
     }
