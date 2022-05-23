@@ -38,9 +38,11 @@ async function run(): Promise<void> {
       const client = new HttpClient()
       let result
 
+      core.info(`Pizza 1`)
       try {
         result = await check(processed, client, excluded)
       } catch (error: any) {
+        core.info(`Pizza 2`)
         core.info(error.message)
         core.warning(error.message)
         core.error(error.message)
