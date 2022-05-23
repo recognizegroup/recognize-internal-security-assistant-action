@@ -4,7 +4,6 @@ import {HttpClient} from './http/http-client'
 import {ReportMarkdownConverter} from './report/report-markdown-converter'
 import {ViolationType} from './models/violation-type'
 import {check} from './check'
-import {warning} from '@actions/core';
 
 async function run(): Promise<void> {
   try {
