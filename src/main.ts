@@ -47,7 +47,7 @@ async function run(): Promise<void> {
           status: 'completed',
           output: {
             title: `${name}`,
-            summary: 'The scan resulted in a error',
+            summary: 'The scan resulted in an error.',
             text: error.message
           },
           ...github.context.repo
