@@ -211,7 +211,7 @@ function run() {
                     core.setFailed(error.message);
                     yield octokit.rest.checks.update(Object.assign({ check_run_id: createdCheck.data.id, conclusion: 'failure', status: 'completed', output: {
                             title: `${name}`,
-                            summary: 'The scan resulted in a error',
+                            summary: 'The scan resulted in an error.',
                             text: error.message
                         } }, github.context.repo));
                     continue;
