@@ -122,7 +122,7 @@ describe('check function', () => {
         {
           id: 'secure-cookies',
           violation: 2,
-          description: 'Insecure cookies test found.'
+          description: 'Insecure cookie(s) test found.'
         }
       ])
     )

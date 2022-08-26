@@ -43,7 +43,7 @@ export const secureCookies: Rule = async (
     return {
       id,
       violation: ViolationType.ERROR,
-      description: `Insecure cookies ${insecureCookies.join(', ')} found.`
+      description: `Insecure cookie(s) ${insecureCookies.join(', ')} found.`
     }
   }
 
