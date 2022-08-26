@@ -25,6 +25,7 @@ export const secureCookies: Rule = async (
       : cookieHeader
     : []
 
+  const insecureCookies: string[] = []
   for (const cookieString of setCookies) {
     const cookieParts = cookieString
       .split(';')
@@ -34,11 +35,15 @@ export const secureCookies: Rule = async (
       const cookie = cookieParts[0] ?? ''
       const name = cookie.split('=')[0]
 
-      return {
-        id,
-        violation: ViolationType.ERROR,
-        description: `Insecure cookie ${name} found.`
-      }
+      insecureCookies.push(name)
+    }
+  }
+
+  if (insecureCookies.length > 0) {
+    return {
+      id,
+      violation: ViolationType.ERROR,
+      description: `Insecure cookies ${insecureCookies.join(', ')} found.`
     }
   }
 
