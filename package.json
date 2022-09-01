@@ -28,7 +28,7 @@
   "dependencies": {
     "@actions/core": "^1.9.1",
     "@actions/github": "^5.0.0",
-    "axios": "^0.26.1",
+    "axios": "^0.27.2",
     "content-security-policy-parser": "^0.4.0",
     "node-ssllabs": "^2.1.0",
     "pac-proxy-agent": "^5.0.0",
