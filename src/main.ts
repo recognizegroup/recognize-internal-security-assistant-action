@@ -8,7 +8,7 @@ import {check} from './check'
 async function run(): Promise<void> {
   try {
     const token = core.getInput('token', {required: true})
-    // const octokit = github.getOctokit(token)
+    const octokit = github.getOctokit(token)
 
     const urls: string = core.getInput('urls')
     const excluded: string[] = core
@@ -22,16 +22,16 @@ async function run(): Promise<void> {
 
       core.info(`Creating check run ${name}`)
 
-      // const createdCheck = await octokit.rest.checks.create({
-      //   head_sha: github.context.sha,
-      //   name,
-      //   status: 'in_progress',
-      //   output: {
-      //     title: name,
-      //     summary: ''
-      //   },
-      //   ...github.context.repo
-      // })
+      const createdCheck = await octokit.rest.checks.create({
+        head_sha: github.context.sha,
+        name,
+        status: 'in_progress',
+        output: {
+          title: name,
+          summary: ''
+        },
+        ...github.context.repo
+      })
 
       const client = new HttpClient()
       let result
@@ -41,17 +41,17 @@ async function run(): Promise<void> {
       } catch (error: any) {
         core.setFailed(error.message)
 
-        // await octokit.rest.checks.update({
-        //   check_run_id: createdCheck.data.id,
-        //   conclusion: 'failure',
-        //   status: 'completed',
-        //   output: {
-        //     title: `${name}`,
-        //     summary: 'The scan resulted in an error.',
-        //     text: error.message
-        //   },
-        //   ...github.context.repo
-        // })
+        await octokit.rest.checks.update({
+          check_run_id: createdCheck.data.id,
+          conclusion: 'failure',
+          status: 'completed',
+          output: {
+            title: `${name}`,
+            summary: 'The scan resulted in an error.',
+            text: error.message
+          },
+          ...github.context.repo
+        })
         continue
       }
 
@@ -71,17 +71,17 @@ async function run(): Promise<void> {
       const reporter = new ReportMarkdownConverter()
       const summary = `The scan resulted in ${failures.length} failures, ${warnings.length} warnings. A total of ${executed.length} checks were executed.`
 
-      // await octokit.rest.checks.update({
-      //   check_run_id: createdCheck.data.id,
-      //   conclusion,
-      //   status: 'completed',
-      //   output: {
-      //     title: `${name}`,
-      //     summary,
-      //     text: reporter.convert(result)
-      //   },
-      //   ...github.context.repo
-      // })
+      await octokit.rest.checks.update({
+        check_run_id: createdCheck.data.id,
+        conclusion,
+        status: 'completed',
+        output: {
+          title: `${name}`,
+          summary,
+          text: reporter.convert(result)
+        },
+        ...github.context.repo
+      })
     }
   } catch (error: any) {
     core.setFailed(error.message)
