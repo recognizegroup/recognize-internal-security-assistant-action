@@ -27,11 +27,11 @@ export const httpHttpsRedirect: Rule = async (
         description: `Non-HTTPs traffic is not redirected to HTTPS`
       }
     }
-  } catch (error) {
+  } catch (error: any) {
     return {
       id,
       violation: ViolationType.ERROR,
-      description: `Non-HTTPs traffic is not redirected to HTTPS but resulted in an error`
+      description: `Non-HTTPs traffic is not redirected to HTTPS but resulted in an error: ${error.message}`
     }
   }
 

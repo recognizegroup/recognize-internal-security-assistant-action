@@ -559,7 +559,7 @@ const httpHttpsRedirect = (url, client, excluded = []) => __awaiter(void 0, void
         return {
             id,
             violation: violation_type_1.ViolationType.ERROR,
-            description: `Non-HTTPs traffic is not redirected to HTTPS but resulted in an error`
+            description: `Non-HTTPs traffic is not redirected to HTTPS but resulted in an error: ${error.message}`
         };
     }
     return {
