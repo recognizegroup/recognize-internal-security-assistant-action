@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/named
 import axios, {AxiosResponse} from 'axios'
 
 export class HttpClient {
