@@ -14,7 +14,7 @@ inputs:
   application-insights-connection-string:
     description: 'Application Insights Connection String'
     required: true
-    default: ${{ vars.SECURITY_REPORT_APPLICATION_INSIGHTS_CONNECTION_STRING }}
+    default: ${{ github.token }}
 runs:
   using: 'node16'
   main: 'dist/index.js'
