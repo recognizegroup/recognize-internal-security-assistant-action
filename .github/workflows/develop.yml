@@ -9,7 +9,7 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: recognizegroup/recognize-security-report-action@feature/TD-553-security-reports-dashboards
+      - uses: recognizegroup/recognize-internal-security-assistant-action@feature/TD-553-security-reports-dashboards
         with:
           urls: https://recognize.nl
           token: ${{ github.token }}
