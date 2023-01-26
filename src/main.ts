@@ -8,6 +8,14 @@ import {check} from './check'
 async function run(): Promise<void> {
   try {
     const token = core.getInput('token', {required: true})
+    const applicationInsights = core.getInput(
+      'application-insights-connection-string'
+    )
+
+    core.info(
+      `Using application insights connection string: ${applicationInsights}`
+    )
+
     const octokit = github.getOctokit(token)
 
     const urls: string = core.getInput('urls')
