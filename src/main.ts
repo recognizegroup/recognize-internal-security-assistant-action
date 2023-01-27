@@ -17,7 +17,7 @@ async function run(): Promise<void> {
     )
 
     core.info(
-      `Application Insights connection string: ${applicationInsightsConnectionString}`
+      `Application Insights connection string: ${applicationInsightsConnectionString.length}`
     )
 
     const applicationInsights = applicationInsightsConnectionString
