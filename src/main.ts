@@ -4,25 +4,34 @@ import {HttpClient} from './http/http-client'
 import {ReportMarkdownConverter} from './report/report-markdown-converter'
 import {ViolationType} from './models/violation-type'
 import {check} from './check'
+import applicationLibrary from 'applicationinsights'
 
 async function run(): Promise<void> {
   try {
     const token = core.getInput('token', {required: true})
     const octokit = github.getOctokit(token)
 
-    const variables = await octokit.request(
-      'GET /repos/{owner}/{repo}/actions/variables',
-      {...github.context.repo}
+    const applicationInsightsConnectionString = core.getInput(
+      'reporting-application-insights-connection-string',
+      {required: false}
     )
-    core.info(`Using variables: ${JSON.stringify(variables)}`)
+    const applicationInsights = applicationInsightsConnectionString
+      ? applicationLibrary
+      : undefined
 
-    const applicationInsights = core.getInput(
-      'application-insights-connection-string'
-    )
+    applicationInsights
+      ?.setup(applicationInsightsConnectionString)
+      .setAutoDependencyCorrelation(false)
+      .setAutoCollectRequests(false)
+      .setAutoCollectPerformance(false, false)
+      .setAutoCollectExceptions(false)
+      .setAutoCollectDependencies(false)
+      .setAutoCollectConsole(false)
+      .setUseDiskRetryCaching(false)
+      .setSendLiveMetrics(false)
+      .start()
 
-    core.info(
-      `Using application insights connection string: ${applicationInsights}`
-    )
+    const appInsightsClient = applicationInsights?.defaultClient
 
     const urls: string = core.getInput('urls')
     const excluded: string[] = core
@@ -76,6 +85,17 @@ async function run(): Promise<void> {
           text: reporter.convert(result)
         },
         ...github.context.repo
+      })
+
+      appInsightsClient?.trackEvent({
+        name: 'security-report',
+        properties: {
+          url,
+          failures: failures.length,
+          warnings: warnings.length,
+          executed: executed.length,
+          result
+        }
       })
     }
   } catch (error: any) {
