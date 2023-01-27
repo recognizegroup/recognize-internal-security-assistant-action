@@ -11,7 +11,6 @@ inputs:
   token:
     description: 'GitHub API token'
     required: true
-    default: ${{ github.token }}
   application-insights-connection-string:
     description: 'Application Insights Connection String'
     default: ''

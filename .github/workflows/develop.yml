@@ -12,3 +12,4 @@ jobs:
       - uses: recognizegroup/recognize-internal-security-assistant-action@feature/TD-553-security-reports-dashboards
         with:
           urls: https://recognize.nl
+          token: ${{ secrets.GITHUB_TOKEN }}
