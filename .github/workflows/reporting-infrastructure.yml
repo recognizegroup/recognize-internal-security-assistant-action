@@ -1,0 +1,36 @@
+name: Rollout reporting and dashboarding infrastructure
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  infrastructure:
+    name: Deploy infrastructure
+    defaults:
+      run:
+        working-directory: terraform/
+    runs-on: ubuntu-latest
+    environment: prd
+    concurrency: prd
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
+      - uses: autero1/action-terragrunt@v1.2.0
+        with:
+          terragrunt_version: 0.38.5
+      - run: terragrunt run-all apply --terragrunt-non-interactive
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          ARM_USE_OIDC: true
+          ARM_SKIP_PROVIDER_REGISTRATION: true
+          ENVIRONMENT: prd

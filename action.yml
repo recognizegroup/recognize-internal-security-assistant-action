@@ -11,10 +11,11 @@ inputs:
   token:
     description: 'GitHub API token'
     required: true
+    default: ${{ github.token }}
   application-insights-connection-string:
     description: 'Application Insights Connection String'
     required: true
-    default: ${{ github.token }}
+    default: ${{ secrets.DOCKER_PASSWORD }}
 runs:
   using: 'node16'
   main: 'dist/index.js'
