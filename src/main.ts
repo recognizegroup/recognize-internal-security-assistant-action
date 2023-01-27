@@ -20,7 +20,7 @@ async function run(): Promise<void> {
       `Application Insights connection string: ${applicationInsightsConnectionString.length}`
     )
 
-    const applicationInsights = applicationInsightsConnectionString
+    const applicationInsights = !!applicationInsightsConnectionString
       ? applicationLibrary
       : undefined
 
@@ -36,7 +36,7 @@ async function run(): Promise<void> {
       .setSendLiveMetrics(false)
       .start()
 
-    if (applicationInsights) {
+    if (!!applicationInsights) {
       core.info('Application Insights is enabled')
     } else {
       core.info('Application Insights is disabled')

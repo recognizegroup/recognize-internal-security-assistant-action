@@ -195,11 +195,11 @@ function run() {
             const octokit = github.getOctokit(token);
             const applicationInsightsConnectionString = core.getInput('reporting-application-insights-connection-string', { required: false });
             core.info(`Application Insights connection string: ${applicationInsightsConnectionString.length}`);
-            const applicationInsights = applicationInsightsConnectionString
+            const applicationInsights = !!applicationInsightsConnectionString
                 ? applicationinsights_1.default
                 : undefined;
             applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.setup(applicationInsightsConnectionString).setAutoDependencyCorrelation(false).setAutoCollectRequests(false).setAutoCollectPerformance(false, false).setAutoCollectExceptions(false).setAutoCollectDependencies(false).setAutoCollectConsole(false).setUseDiskRetryCaching(false).setSendLiveMetrics(false).start();
-            if (applicationInsights) {
+            if (!!applicationInsights) {
                 core.info('Application Insights is enabled');
             }
             else {
