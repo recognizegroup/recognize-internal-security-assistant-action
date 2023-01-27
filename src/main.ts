@@ -15,6 +15,11 @@ async function run(): Promise<void> {
       'reporting-application-insights-connection-string',
       {required: false}
     )
+
+    core.info(
+      `Application Insights connection string: ${applicationInsightsConnectionString}`
+    )
+
     const applicationInsights = applicationInsightsConnectionString
       ? applicationLibrary
       : undefined

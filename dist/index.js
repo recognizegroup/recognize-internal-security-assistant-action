@@ -194,6 +194,7 @@ function run() {
             const token = core.getInput('token', { required: true });
             const octokit = github.getOctokit(token);
             const applicationInsightsConnectionString = core.getInput('reporting-application-insights-connection-string', { required: false });
+            core.info(`Application Insights connection string: ${applicationInsightsConnectionString}`);
             const applicationInsights = applicationInsightsConnectionString
                 ? applicationinsights_1.default
                 : undefined;
