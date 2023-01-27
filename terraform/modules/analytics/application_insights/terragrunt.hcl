@@ -19,4 +19,5 @@ inputs = {
   daily_data_cap_in_gb       = 1
   resource_group_name        = include.locals.env.resource_group_name
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
+  sampling_percentage        = 100.0
 }
