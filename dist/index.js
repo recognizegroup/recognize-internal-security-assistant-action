@@ -232,7 +232,7 @@ function run() {
                         text: reporter.convert(result)
                     } }, github.context.repo));
                 appInsightsClient === null || appInsightsClient === void 0 ? void 0 : appInsightsClient.trackEvent({
-                    name: 'security-report',
+                    name: 'securityReport',
                     properties: {
                         url,
                         failures: failures.length,

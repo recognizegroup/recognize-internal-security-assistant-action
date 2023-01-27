@@ -97,7 +97,7 @@ async function run(): Promise<void> {
       })
 
       appInsightsClient?.trackEvent({
-        name: 'security-report',
+        name: 'securityReport',
         properties: {
           url,
           failures: failures.length,
