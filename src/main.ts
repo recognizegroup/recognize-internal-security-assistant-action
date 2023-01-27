@@ -20,17 +20,7 @@ async function run(): Promise<void> {
       ? applicationLibrary
       : undefined
 
-    applicationInsights
-      ?.setup(applicationInsightsConnectionString)
-      .setAutoDependencyCorrelation(false)
-      .setAutoCollectRequests(false)
-      .setAutoCollectPerformance(false, false)
-      .setAutoCollectExceptions(false)
-      .setAutoCollectDependencies(false)
-      .setAutoCollectConsole(false)
-      .setUseDiskRetryCaching(false)
-      .setSendLiveMetrics(false)
-      .start()
+    applicationInsights?.setup(applicationInsightsConnectionString).start()
 
     if (applicationInsights) {
       core.info('Application Insights is enabled')

@@ -194,7 +194,7 @@ function run() {
             const applicationInsights = applicationInsightsConnectionString
                 ? applicationLibrary
                 : undefined;
-            applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.setup(applicationInsightsConnectionString).setAutoDependencyCorrelation(false).setAutoCollectRequests(false).setAutoCollectPerformance(false, false).setAutoCollectExceptions(false).setAutoCollectDependencies(false).setAutoCollectConsole(false).setUseDiskRetryCaching(false).setSendLiveMetrics(false).start();
+            applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.setup(applicationInsightsConnectionString).start();
             if (applicationInsights) {
                 core.info('Application Insights is enabled');
             }
