@@ -20,15 +20,19 @@ async function run(): Promise<void> {
       ? applicationLibrary
       : undefined
 
-    applicationInsights?.setup(applicationInsightsConnectionString).start()
+    applicationInsights
+      ?.setup(applicationInsightsConnectionString)
+      .setInternalLogging(true, true)
+      .start()
+
+    const appInsightsClient = applicationInsights?.defaultClient
 
     if (applicationInsights) {
       core.info('Application Insights is enabled')
+      appInsightsClient!.config.maxBatchSize = 1
     } else {
       core.info('Application Insights is disabled')
     }
-
-    const appInsightsClient = applicationInsights?.defaultClient
 
     const urls: string = core.getInput('urls')
     const excluded: string[] = core

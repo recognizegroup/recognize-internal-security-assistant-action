@@ -194,14 +194,15 @@ function run() {
             const applicationInsights = applicationInsightsConnectionString
                 ? applicationLibrary
                 : undefined;
-            applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.setup(applicationInsightsConnectionString).start();
+            applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.setup(applicationInsightsConnectionString).setInternalLogging(true, true).start();
+            const appInsightsClient = applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.defaultClient;
             if (applicationInsights) {
                 core.info('Application Insights is enabled');
+                appInsightsClient.config.maxBatchSize = 1;
             }
             else {
                 core.info('Application Insights is disabled');
             }
-            const appInsightsClient = applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.defaultClient;
             const urls = core.getInput('urls');
             const excluded = core
                 .getInput('excluded')
