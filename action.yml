@@ -11,8 +11,9 @@ inputs:
   token:
     description: 'GitHub API token'
     required: true
-  application-insights-connection-string:
-    description: 'Application Insights Connection String'
+    default: ${{ github.token }}
+  reporting-application-insights-connection-string:
+    description: 'Application Insights Connection String for reporting'
     default: ''
 runs:
   using: 'node16'
