@@ -96,7 +96,6 @@ async function run(): Promise<void> {
         ...github.context.repo
       })
 
-      core.info('Will report to Application Insights')
       appInsightsClient?.trackEvent({
         name: 'security-report',
         properties: {
@@ -104,7 +103,7 @@ async function run(): Promise<void> {
           failures: failures.length,
           warnings: warnings.length,
           executed: executed.length,
-          result
+          report: Object.fromEntries(result.map(it => [it.id, it.violation]))
         }
       })
 

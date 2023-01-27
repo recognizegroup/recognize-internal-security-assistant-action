@@ -231,7 +231,6 @@ function run() {
                         summary,
                         text: reporter.convert(result)
                     } }, github.context.repo));
-                core.info('Will report to Application Insights');
                 appInsightsClient === null || appInsightsClient === void 0 ? void 0 : appInsightsClient.trackEvent({
                     name: 'security-report',
                     properties: {
@@ -239,7 +238,7 @@ function run() {
                         failures: failures.length,
                         warnings: warnings.length,
                         executed: executed.length,
-                        result
+                        report: Object.fromEntries(result.map(it => [it.id, it.violation]))
                     }
                 });
                 appInsightsClient === null || appInsightsClient === void 0 ? void 0 : appInsightsClient.flush();
