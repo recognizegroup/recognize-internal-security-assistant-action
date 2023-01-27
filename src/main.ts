@@ -4,7 +4,7 @@ import {HttpClient} from './http/http-client'
 import {ReportMarkdownConverter} from './report/report-markdown-converter'
 import {ViolationType} from './models/violation-type'
 import {check} from './check'
-import applicationLibrary from 'applicationinsights'
+import * as applicationLibrary from 'applicationinsights'
 
 async function run(): Promise<void> {
   try {
@@ -14,10 +14,6 @@ async function run(): Promise<void> {
     const applicationInsightsConnectionString = core.getInput(
       'reporting-application-insights-connection-string',
       {required: false}
-    )
-
-    core.info(
-      `Application Insights connection string: ${applicationInsightsConnectionString.length}`
     )
 
     const applicationInsights = applicationInsightsConnectionString

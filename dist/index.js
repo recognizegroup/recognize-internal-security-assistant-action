@@ -177,9 +177,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(42186));
 const github = __importStar(__nccwpck_require__(95438));
@@ -187,16 +184,15 @@ const http_client_1 = __nccwpck_require__(68521);
 const report_markdown_converter_1 = __nccwpck_require__(65461);
 const violation_type_1 = __nccwpck_require__(14471);
 const check_1 = __nccwpck_require__(57657);
-const applicationinsights_1 = __importDefault(__nccwpck_require__(89962));
+const applicationLibrary = __importStar(__nccwpck_require__(89962));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const token = core.getInput('token', { required: true });
             const octokit = github.getOctokit(token);
             const applicationInsightsConnectionString = core.getInput('reporting-application-insights-connection-string', { required: false });
-            core.info(`Application Insights connection string: ${applicationInsightsConnectionString.length}`);
             const applicationInsights = applicationInsightsConnectionString
-                ? applicationinsights_1.default
+                ? applicationLibrary
                 : undefined;
             console.log('Application insights: ', applicationInsights);
             applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.setup(applicationInsightsConnectionString).setAutoDependencyCorrelation(false).setAutoCollectRequests(false).setAutoCollectPerformance(false, false).setAutoCollectExceptions(false).setAutoCollectDependencies(false).setAutoCollectConsole(false).setUseDiskRetryCaching(false).setSendLiveMetrics(false).start();
