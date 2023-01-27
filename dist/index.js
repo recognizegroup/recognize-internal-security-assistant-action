@@ -198,6 +198,12 @@ function run() {
                 ? applicationinsights_1.default
                 : undefined;
             applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.setup(applicationInsightsConnectionString).setAutoDependencyCorrelation(false).setAutoCollectRequests(false).setAutoCollectPerformance(false, false).setAutoCollectExceptions(false).setAutoCollectDependencies(false).setAutoCollectConsole(false).setUseDiskRetryCaching(false).setSendLiveMetrics(false).start();
+            if (applicationInsights) {
+                core.info('Application Insights is enabled');
+            }
+            else {
+                core.info('Application Insights is disabled');
+            }
             const appInsightsClient = applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.defaultClient;
             const urls = core.getInput('urls');
             const excluded = core
@@ -237,6 +243,7 @@ function run() {
                         result
                     }
                 });
+                appInsightsClient === null || appInsightsClient === void 0 ? void 0 : appInsightsClient.flush();
             }
         }
         catch (error) {

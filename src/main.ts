@@ -31,6 +31,12 @@ async function run(): Promise<void> {
       .setSendLiveMetrics(false)
       .start()
 
+    if (applicationInsights) {
+      core.info('Application Insights is enabled')
+    } else {
+      core.info('Application Insights is disabled')
+    }
+
     const appInsightsClient = applicationInsights?.defaultClient
 
     const urls: string = core.getInput('urls')
@@ -97,6 +103,8 @@ async function run(): Promise<void> {
           result
         }
       })
+
+      appInsightsClient?.flush()
     }
   } catch (error: any) {
     core.setFailed(error.message)
