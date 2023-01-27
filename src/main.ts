@@ -8,6 +8,14 @@ import {check} from './check'
 async function run(): Promise<void> {
   try {
     const token = core.getInput('token', {required: true})
+    const octokit = github.getOctokit(token)
+
+    const variables = await octokit.request(
+      'GET /repos/{owner}/{repo}/actions/variables',
+      {...github.context.repo}
+    )
+    core.info(`Using variables: ${JSON.stringify(variables)}`)
+
     const applicationInsights = core.getInput(
       'application-insights-connection-string'
     )
@@ -15,8 +23,6 @@ async function run(): Promise<void> {
     core.info(
       `Using application insights connection string: ${applicationInsights}`
     )
-
-    const octokit = github.getOctokit(token)
 
     const urls: string = core.getInput('urls')
     const excluded: string[] = core
