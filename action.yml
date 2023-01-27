@@ -14,8 +14,7 @@ inputs:
     default: ${{ github.token }}
   application-insights-connection-string:
     description: 'Application Insights Connection String'
-    required: true
-    default: ${{ secrets.DOCKER_PASSWORD }}
+    default: ''
 runs:
   using: 'node16'
   main: 'dist/index.js'
