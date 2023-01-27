@@ -20,8 +20,6 @@ async function run(): Promise<void> {
       ? applicationLibrary
       : undefined
 
-    console.log('Application insights: ', applicationInsights)
-
     applicationInsights
       ?.setup(applicationInsightsConnectionString)
       .setAutoDependencyCorrelation(false)

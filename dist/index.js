@@ -194,7 +194,6 @@ function run() {
             const applicationInsights = applicationInsightsConnectionString
                 ? applicationLibrary
                 : undefined;
-            console.log('Application insights: ', applicationInsights);
             applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.setup(applicationInsightsConnectionString).setAutoDependencyCorrelation(false).setAutoCollectRequests(false).setAutoCollectPerformance(false, false).setAutoCollectExceptions(false).setAutoCollectDependencies(false).setAutoCollectConsole(false).setUseDiskRetryCaching(false).setSendLiveMetrics(false).start();
             if (applicationInsights) {
                 core.info('Application Insights is enabled');
