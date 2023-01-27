@@ -22,6 +22,14 @@ async function run(): Promise<void> {
 
     applicationInsights
       ?.setup(applicationInsightsConnectionString)
+      .setAutoDependencyCorrelation(false)
+      .setAutoCollectRequests(false)
+      .setAutoCollectPerformance(false, false)
+      .setAutoCollectExceptions(false)
+      .setAutoCollectDependencies(false)
+      .setAutoCollectConsole(false)
+      .setUseDiskRetryCaching(false)
+      .setSendLiveMetrics(false)
       .setInternalLogging(true, true)
       .start()
 
@@ -88,6 +96,7 @@ async function run(): Promise<void> {
         ...github.context.repo
       })
 
+      core.info('Will report to Application Insights')
       appInsightsClient?.trackEvent({
         name: 'security-report',
         properties: {

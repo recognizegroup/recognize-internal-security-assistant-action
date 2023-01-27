@@ -194,7 +194,7 @@ function run() {
             const applicationInsights = applicationInsightsConnectionString
                 ? applicationLibrary
                 : undefined;
-            applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.setup(applicationInsightsConnectionString).setInternalLogging(true, true).start();
+            applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.setup(applicationInsightsConnectionString).setAutoDependencyCorrelation(false).setAutoCollectRequests(false).setAutoCollectPerformance(false, false).setAutoCollectExceptions(false).setAutoCollectDependencies(false).setAutoCollectConsole(false).setUseDiskRetryCaching(false).setSendLiveMetrics(false).setInternalLogging(true, true).start();
             const appInsightsClient = applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.defaultClient;
             if (applicationInsights) {
                 core.info('Application Insights is enabled');
@@ -231,6 +231,7 @@ function run() {
                         summary,
                         text: reporter.convert(result)
                     } }, github.context.repo));
+                core.info('Will report to Application Insights');
                 appInsightsClient === null || appInsightsClient === void 0 ? void 0 : appInsightsClient.trackEvent({
                     name: 'security-report',
                     properties: {
