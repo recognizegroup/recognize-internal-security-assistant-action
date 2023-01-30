@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/TD-553-security-reprts-dashboards
 
 permissions:
   id-token: write
@@ -24,7 +23,7 @@ jobs:
       - uses: hashicorp/setup-terraform@v2
         with:
           terraform_wrapper: false
-      - uses: autero1/action-terragrunt@v1.2.0
+      - uses: autero1/action-terragrunt@v1.3.0
         with:
           terragrunt_version: 0.38.5
       - run: terragrunt run-all apply --terragrunt-non-interactive
