@@ -84,11 +84,11 @@ export const ssl: Rule = async (
       violation: ViolationType.NONE,
       description: `Valid SSL settings.`
     }
-  } catch (error) {
+  } catch (error: any) {
     return {
       id,
       violation: ViolationType.ERROR,
-      description: `Invalid SSL settings.`
+      description: `Invalid SSL settings. reasons: ${error.message}`
     }
   }
 }
