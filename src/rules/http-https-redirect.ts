@@ -15,15 +15,23 @@ export const httpHttpsRedirect: Rule = async (
     return exclusionResult
   }
 
-  const nonHttps = url.replace('https://', 'http://')
-  const response = await client.get(nonHttps)
-  const finalUrl: string = response.request.res.responseUrl
+  try {
+    const nonHttps = url.replace('https://', 'http://')
+    const response = await client.get(nonHttps)
+    const finalUrl: string = response.request.res.responseUrl
 
-  if (!finalUrl.startsWith('https://')) {
+    if (!finalUrl.startsWith('https://')) {
+      return {
+        id,
+        violation: ViolationType.ERROR,
+        description: `Non-HTTPs traffic is not redirected to HTTPS`
+      }
+    }
+  } catch (error: any) {
     return {
       id,
       violation: ViolationType.ERROR,
-      description: `Non-HTTPs traffic is not redirected to HTTPS`
+      description: `Non-HTTPs traffic is not redirected to HTTPS but resulted in an error: ${error.message}`
     }
   }
 
