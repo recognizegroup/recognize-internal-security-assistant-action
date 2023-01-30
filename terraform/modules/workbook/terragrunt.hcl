@@ -15,7 +15,7 @@ dependency "application_insights" {
 }
 
 inputs = {
-  display_name        = "wb-${include.locals.client}-${include.locals.workload}-${include.locals.environment}"
+  display_name        = "Security Reporting Monitor"
   resource_group_name = include.locals.env.resource_group_name
   json_data           = file("${get_repo_root()}/dashboard/workbook.json")
   source_id           = dependency.application_insights.outputs.id
