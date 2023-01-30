@@ -11,5 +11,5 @@ jobs:
     steps:
       - uses: recognizegroup/recognize-internal-security-assistant-action@feature/TD-553-security-reports-dashboards
         with:
-          urls: https://recognize.nl
+          urls: https://api.debouwapp.nl,https://workspace.recognize.nl
           reporting-application-insights-connection-string: ${{ secrets.SECURITY_REPORT_APPLICATION_INSIGHTS_CONNECTION_STRING }}
