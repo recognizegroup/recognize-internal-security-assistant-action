@@ -194,7 +194,7 @@ function run() {
             const applicationInsights = applicationInsightsConnectionString
                 ? applicationLibrary
                 : undefined;
-            applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.setup(applicationInsightsConnectionString).setAutoDependencyCorrelation(false).setAutoCollectRequests(false).setAutoCollectPerformance(false, false).setAutoCollectExceptions(false).setAutoCollectDependencies(false).setAutoCollectConsole(false).setUseDiskRetryCaching(false).setSendLiveMetrics(false).setInternalLogging(true, true).start();
+            applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.setup(applicationInsightsConnectionString).setAutoDependencyCorrelation(false).setAutoCollectRequests(false).setAutoCollectPerformance(false, false).setAutoCollectExceptions(false).setAutoCollectDependencies(false).setAutoCollectConsole(false).setUseDiskRetryCaching(false).setSendLiveMetrics(false).start();
             const appInsightsClient = applicationInsights === null || applicationInsights === void 0 ? void 0 : applicationInsights.defaultClient;
             if (applicationInsights) {
                 core.info('Application Insights is enabled');
@@ -231,14 +231,21 @@ function run() {
                         summary,
                         text: reporter.convert(result)
                     } }, github.context.repo));
+                const convertKey = (str) => {
+                    str = str.replace(/-/g, ' ');
+                    str = str.replace(/\w\S*/g, txt => {
+                        return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();
+                    });
+                    return str;
+                };
                 appInsightsClient === null || appInsightsClient === void 0 ? void 0 : appInsightsClient.trackEvent({
-                    name: 'securityReport',
+                    name: 'security-report-result',
                     properties: {
                         url,
                         failures: failures.length,
                         warnings: warnings.length,
                         executed: executed.length,
-                        report: Object.fromEntries(result.map(it => [it.id, it.violation]))
+                        report: Object.fromEntries(result.map(it => [convertKey(it.id), it.violation]))
                     }
                 });
                 appInsightsClient === null || appInsightsClient === void 0 ? void 0 : appInsightsClient.flush();

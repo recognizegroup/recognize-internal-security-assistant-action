@@ -30,7 +30,6 @@ async function run(): Promise<void> {
       .setAutoCollectConsole(false)
       .setUseDiskRetryCaching(false)
       .setSendLiveMetrics(false)
-      .setInternalLogging(true, true)
       .start()
 
     const appInsightsClient = applicationInsights?.defaultClient
@@ -96,14 +95,25 @@ async function run(): Promise<void> {
         ...github.context.repo
       })
 
+      const convertKey = (str: string): string => {
+        str = str.replace(/-/g, ' ')
+        str = str.replace(/\w\S*/g, txt => {
+          return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase()
+        })
+
+        return str
+      }
+
       appInsightsClient?.trackEvent({
-        name: 'securityReport',
+        name: 'security-report-result',
         properties: {
           url,
           failures: failures.length,
           warnings: warnings.length,
           executed: executed.length,
-          report: Object.fromEntries(result.map(it => [it.id, it.violation]))
+          report: Object.fromEntries(
+            result.map(it => [convertKey(it.id), it.violation])
+          )
         }
       })
 
