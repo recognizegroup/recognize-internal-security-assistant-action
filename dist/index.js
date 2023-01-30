@@ -240,8 +240,22 @@ function run() {
                     });
                     return str;
                 };
+                const convertValue = (violation) => {
+                    switch (violation) {
+                        case violation_type_1.ViolationType.NONE:
+                            return 'Passed';
+                        case violation_type_1.ViolationType.WARNING:
+                            return 'Warning';
+                        case violation_type_1.ViolationType.ERROR:
+                            return 'Failed';
+                        case violation_type_1.ViolationType.EXCLUDED:
+                            return 'Skipped';
+                        default:
+                            return 'Unknown';
+                    }
+                };
                 appInsightsClient === null || appInsightsClient === void 0 ? void 0 : appInsightsClient.trackEvent({
-                    name: 'security-report-value',
+                    name: 'security-report-value-item',
                     properties: {
                         url,
                         failures: failures.length,
@@ -249,7 +263,7 @@ function run() {
                         executed: executed.length,
                         passed: passed.length,
                         skipped: skipped.length,
-                        report: Object.fromEntries(result.map(it => [convertKey(it.id), it.violation]))
+                        report: Object.fromEntries(result.map(it => [convertKey(it.id), convertValue(it.violation)]))
                     }
                 });
                 appInsightsClient === null || appInsightsClient === void 0 ? void 0 : appInsightsClient.flush();

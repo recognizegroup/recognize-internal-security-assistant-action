@@ -108,8 +108,23 @@ async function run(): Promise<void> {
         return str
       }
 
+      const convertValue = (violation: ViolationType): string => {
+        switch (violation) {
+          case ViolationType.NONE:
+            return 'Passed'
+          case ViolationType.WARNING:
+            return 'Warning'
+          case ViolationType.ERROR:
+            return 'Failed'
+          case ViolationType.EXCLUDED:
+            return 'Skipped'
+          default:
+            return 'Unknown'
+        }
+      }
+
       appInsightsClient?.trackEvent({
-        name: 'security-report-value',
+        name: 'security-report-value-item',
         properties: {
           url,
           failures: failures.length,
@@ -118,7 +133,7 @@ async function run(): Promise<void> {
           passed: passed.length,
           skipped: skipped.length,
           report: Object.fromEntries(
-            result.map(it => [convertKey(it.id), it.violation])
+            result.map(it => [convertKey(it.id), convertValue(it.violation)])
           )
         }
       })
