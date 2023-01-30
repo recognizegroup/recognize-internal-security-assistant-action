@@ -29,9 +29,9 @@ jobs:
           terragrunt_version: 0.38.5
       - run: terragrunt run-all apply --terragrunt-non-interactive
         env:
-          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ vars.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
           ARM_USE_OIDC: true
           ARM_SKIP_PROVIDER_REGISTRATION: true
           ENVIRONMENT: prd
