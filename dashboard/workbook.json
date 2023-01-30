@@ -1,0 +1,94 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 1,
+      "content": {
+        "json": "## Security reporting overview\n---\n\nThis report contains all data to coming from the Recognize Internal Security Assistant action runs. With this report, the state of all application runs is traced. This workbook is periodically checked to make sure that appropiate action is taken when needed."
+      },
+      "name": "Heading"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "customEvents\n| where timestamp >= ago(90d)\n| where name == 'security-report-value-item'\n| extend URL = tostring(customDimensions.url)\n| summarize arg_max(timestamp, *) by URL\n| project URL = URL, LastReport = timestamp, Report = todynamic(tostring(customDimensions.report)), Passed=toint(customDimensions.passed), Failures=toint(customDimensions.failures), Warnings=toint(customDimensions.warnings), Skipped=toint(customDimensions.skipped)\n| evaluate bag_unpack(Report)\n| order by Failures desc, LastReport desc",
+        "size": 1,
+        "title": "Report overview",
+        "noDataMessage": "There are no query results.",
+        "showRefreshButton": true,
+        "queryType": 0,
+        "resourceType": "microsoft.insights/components"
+      },
+      "name": "Results"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "customEvents\n| where timestamp >= ago(90d)\n| where name == 'security-report-value-item'\n| extend URL = tostring(customDimensions.url)\n| summarize arg_max(timestamp, *) by URL\n| project Failures=toint(customDimensions.failures), Warnings=toint(customDimensions.warnings), Passed=toint(customDimensions.passed), Skipped=toint(customDimensions.skipped)\n| summarize Failures=sum(Failures), Warnings=sum(Warnings), Passed=sum(Passed), Skipped=sum(Skipped)\n| extend Pack = pack(\"Failures\", Failures, \"Warnings\", Warnings, \"Passed\", Passed, \"Skipped\", Skipped)\n| mv-expand kind=array Pack \n| project key = tostring(Pack[0]), value = toint(Pack[1])\n| render piechart",
+              "size": 0,
+              "title": "Total test results",
+              "timeContext": {
+                "durationMs": 86400000
+              },
+              "showRefreshButton": true,
+              "queryType": 0,
+              "resourceType": "microsoft.insights/components",
+              "chartSettings": {
+                "seriesLabelSettings": [
+                  {
+                    "seriesName": "Passed",
+                    "color": "green"
+                  },
+                  {
+                    "seriesName": "Warnings",
+                    "color": "yellow"
+                  },
+                  {
+                    "seriesName": "Failures",
+                    "color": "redBright"
+                  },
+                  {
+                    "seriesName": "Skipped",
+                    "color": "blue"
+                  }
+                ]
+              }
+            },
+            "customWidth": "25",
+            "name": "passedstate"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "customEvents\n| where timestamp >= ago(90d)\n| where name == 'security-report-value-item'\n| extend URL = tostring(customDimensions.url)\n| summarize arg_max(timestamp, *) by URL\n| where customDimensions.failures > 0\n| project URL=URL, LastReport=timestamp",
+              "size": 0,
+              "title": "Websites with failures",
+              "timeContext": {
+                "durationMs": 86400000
+              },
+              "showRefreshButton": true,
+              "queryType": 0,
+              "resourceType": "microsoft.insights/components"
+            },
+            "customWidth": "25",
+            "name": "WebsitesWithFailures"
+          }
+        ]
+      },
+      "name": "Results Group"
+    }
+  ],
+  "fallbackResourceIds": [
+    "/subscriptions/f6c7eb0c-49e2-4be0-867d-357c703e0795/resourceGroups/rg-recognize-security-reporting-prd/providers/Microsoft.Insights/components/ai-recognize-security-reporting-prd"
+  ],
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
