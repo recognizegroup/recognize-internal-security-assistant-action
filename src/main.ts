@@ -76,6 +76,10 @@ async function run(): Promise<void> {
       const executed = result.filter(
         it => it.violation !== ViolationType.EXCLUDED
       )
+      const passed = result.filter(it => it.violation === ViolationType.NONE)
+      const skipped = result.filter(
+        it => it.violation === ViolationType.EXCLUDED
+      )
 
       const isFailed = failures.length > 0
       const conclusion = isFailed ? 'failure' : 'success'
@@ -105,12 +109,14 @@ async function run(): Promise<void> {
       }
 
       appInsightsClient?.trackEvent({
-        name: 'security-report-result',
+        name: 'security-report-value',
         properties: {
           url,
           failures: failures.length,
           warnings: warnings.length,
           executed: executed.length,
+          passed: passed.length,
+          skipped: skipped.length,
           report: Object.fromEntries(
             result.map(it => [convertKey(it.id), it.violation])
           )

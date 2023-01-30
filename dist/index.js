@@ -222,6 +222,8 @@ function run() {
                 const failures = result.filter(it => it.violation === violation_type_1.ViolationType.ERROR);
                 const warnings = result.filter(it => it.violation === violation_type_1.ViolationType.WARNING);
                 const executed = result.filter(it => it.violation !== violation_type_1.ViolationType.EXCLUDED);
+                const passed = result.filter(it => it.violation === violation_type_1.ViolationType.NONE);
+                const skipped = result.filter(it => it.violation === violation_type_1.ViolationType.EXCLUDED);
                 const isFailed = failures.length > 0;
                 const conclusion = isFailed ? 'failure' : 'success';
                 const reporter = new report_markdown_converter_1.ReportMarkdownConverter();
@@ -239,12 +241,14 @@ function run() {
                     return str;
                 };
                 appInsightsClient === null || appInsightsClient === void 0 ? void 0 : appInsightsClient.trackEvent({
-                    name: 'security-report-result',
+                    name: 'security-report-value',
                     properties: {
                         url,
                         failures: failures.length,
                         warnings: warnings.length,
                         executed: executed.length,
+                        passed: passed.length,
+                        skipped: skipped.length,
                         report: Object.fromEntries(result.map(it => [convertKey(it.id), it.violation]))
                     }
                 });
