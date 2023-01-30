@@ -26,4 +26,3 @@ jobs:
       - uses: ./
         with:
           urls: https://recognize.nl
-          token: ${{ github.token }}

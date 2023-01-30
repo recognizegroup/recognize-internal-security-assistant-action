@@ -9,7 +9,7 @@ include {
 
 inputs = {
   name                 = "la-${include.locals.client}-${include.locals.workload}-${include.locals.environment}"
-  daily_data_cap_in_gb = 1
+  daily_data_cap_in_gb = 0.1
   resource_group_name  = include.locals.env.resource_group_name
-  retention_in_days          = 90
+  retention_in_days    = 365
 }

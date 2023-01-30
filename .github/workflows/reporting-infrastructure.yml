@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - feature/TD-553-security-reports-dashboards
+      - feature/TD-553-security-reprts-dashboards
 
 permissions:
   id-token: write

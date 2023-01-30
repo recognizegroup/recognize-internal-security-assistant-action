@@ -16,9 +16,9 @@ dependency "log_analytics_workspace" {
 
 inputs = {
   name                       = "ai-${include.locals.client}-${include.locals.workload}-${include.locals.environment}"
-  daily_data_cap_in_gb       = 1
+  daily_data_cap_in_gb       = 0.1
   resource_group_name        = include.locals.env.resource_group_name
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
   sampling_percentage        = 100.0
-  retention_in_days          = 90
+  retention_in_days          = 365
 }
