@@ -88,7 +88,7 @@ export const ssl: Rule = async (
     return {
       id,
       violation: ViolationType.ERROR,
-      description: `Invalid SSL settings. reasons: ${error.message}`
+      description: `Invalid SSL settings. reason: ${error.message}`
     }
   }
 }
