@@ -839,7 +839,7 @@ const ssl = (url, client, excluded = []) => __awaiter(void 0, void 0, void 0, fu
         return {
             id,
             violation: violation_type_1.ViolationType.ERROR,
-            description: `Invalid SSL settings. reasons: ${error.message}`
+            description: `Invalid SSL settings. reason: ${error.message}`
         };
     }
 });
