@@ -23,7 +23,7 @@ jobs:
       - uses: hashicorp/setup-terraform@v2
         with:
           terraform_wrapper: false
-      - uses: autero1/action-terragrunt@v1.3.0
+      - uses: autero1/action-terragrunt@v1.3.1
         with:
           terragrunt_version: 0.38.5
       - run: terragrunt run-all apply --terragrunt-non-interactive
