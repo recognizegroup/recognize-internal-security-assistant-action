@@ -19,3 +19,19 @@ updates:
     directory: "terraform/"
     schedule:
       interval: "monthly"
+
+  # Workaround till https://github.com/dependabot/dependabot-core/issues/2178 is fixed
+  - package-ecosystem: "terraform"
+    directory: "terraform/environments/prd"
+    schedule:
+      interval: "monthly"
+
+  - package-ecosystem: "terraform"
+    directory: "terraform/modules/analytics/application_insights"
+    schedule:
+      interval: "monthly"
+
+  - package-ecosystem: "terraform"
+    directory: "terraform/modules/analytics/log_analytics_workspace"
+    schedule:
+      interval: "monthly"
