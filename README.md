@@ -25,7 +25,7 @@ jobs:
   security-report:
     runs-on: ubuntu-latest
     steps:
-      - uses: recognizegroup/recognize-internal-security-assistant-action@v1
+      - uses: recognizegroup/recognize-internal-security-assistant-action@v2
         with:
           urls: https://recognize.nl            # URLs to test (comma separated)
           token: ${{ github.token }}            # Token for the GitHub API

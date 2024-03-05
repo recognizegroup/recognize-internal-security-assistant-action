@@ -23,9 +23,9 @@ jobs:
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_wrapper: false
-      - uses: autero1/action-terragrunt@v1.3.2
+      - uses: autero1/action-terragrunt@v3
         with:
-          terragrunt_version: 0.38.5
+          terragrunt-version: 0.38.5
       - run: terragrunt run-all apply --terragrunt-non-interactive
         env:
           ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
