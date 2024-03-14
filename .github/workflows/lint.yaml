@@ -1,14 +1,47 @@
-name: Lint
+name: Lint Terraform and Terragrunt
 on:
   push:
     branches:
       - '**'
+    paths:
+      - '.github/workflows/lint.yaml'
+      - 'terraform/**'
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - '.github/workflows/lint.yaml'
+      - 'terraform/**'
+  workflow_dispatch:
+
+permissions: {}
 
 jobs:
   lint-terraform:
     runs-on: ubuntu-latest
     name: Lint Terraform
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
-      - run: terraform fmt -check -recursive
+        with:
+          terraform_wrapper: false
+      - run: terraform fmt -check -diff -recursive
+
+  lint-terragrunt:
+    runs-on: ubuntu-latest
+    name: Lint Terragrunt
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+      - uses: autero1/action-terragrunt@v3
+        with:
+          terragrunt-version: 0.38.5
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - working-directory: terraform/
+        run: terragrunt hclfmt --terragrunt-check --terragrunt-diff
